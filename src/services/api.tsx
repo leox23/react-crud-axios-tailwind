@@ -18,13 +18,7 @@ export const getReport = (id: string) => {
 
 export const saveReport = (data: Report) => {
     return axios
-    .post(`${API_BASE_URL}/reports`, data, {
-        headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
-        },
-        withCredentials: false,
-    })
+    .post(`${API_BASE_URL}/reports`, JSON.stringify(data))
     .then(response => response.data.json())
     .catch((error) => console.log("error intentando crear reporte: " + error))
 }
@@ -38,7 +32,12 @@ export const updateReport = (id: string, data: Report) => {
 
 export const deleteReport = (id: string) => {
     return axios
-        .delete(`${API_BASE_URL}/reports/${id}`)
+        .delete(`${API_BASE_URL}/reports/${id}`,{
+            headers: {
+            //  'Access-Control-Allow-Origin': API_BASE_URL
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
         .then(response => response.data.json().data)
         .catch((error) => console.log("error intentando eliminar reporte: " + error))
 }
