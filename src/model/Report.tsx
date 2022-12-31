@@ -1,7 +1,11 @@
 export interface Report {
-    _id? : string;
+    id? : string;
     title: string;
     description: string;
     price : number;
     content : string 
+}
+
+export interface StateReports {
+    reports: Report[]
 }

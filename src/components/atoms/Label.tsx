@@ -1,8 +1,10 @@
+import { ReactNode } from "react"
+
 type Props = {
-    content: string
+    children: ReactNode
 }
-export default function Label({content}: Props) {
+export default function Label({children}: Props) {
     return <>
-        <p>Esto es un label</p>
+        <p>{children}</p>
     </>
 }
