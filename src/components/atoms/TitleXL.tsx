@@ -3,7 +3,7 @@ type Props = {
 }
 
 export default function TitleXL({title} : Props) {
-    return <>
-        <h1>Esto es un titulo extra grande</h1>
-    </>
+    return <div className="flex items-center justify-center py-3">
+        <h1 className="text-3xl font-semibold">Titulo Grande</h1>
+    </div>
 }

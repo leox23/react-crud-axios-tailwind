@@ -1,5 +1,5 @@
-import TitleLG from '../atoms/TitleLG';
 import Label from '../atoms/Label';
+import TitleXL from '../atoms/TitleXL';
 
 type Props = {
     titleCard?: string,
@@ -8,7 +8,7 @@ type Props = {
 
 export function ReportCardHeader({titleCard = 'Default title', description}: Props){
     return <>
-        <TitleLG title="Titulo de prueba"></TitleLG>
+        <TitleXL title="Titulo de prueba"></TitleXL>
         <Label content="contenido de prueba"></Label>
     </>
 }

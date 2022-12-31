@@ -2,8 +2,7 @@ type Props = {
     label: string
 }
 export default function Button({label}: Props) {
-    //recibira color
     return <>
-        <button>{label}</button>
+        <button  className="rounded bg-greenx min-w-[70px] p-2.5">{label}</button>
     </>
 }

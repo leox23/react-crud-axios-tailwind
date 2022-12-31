@@ -5,8 +5,8 @@ type Props = {
     title: string
 }
 export default function FormField({title}:Props) {
-    return <>
+    return <div className="py-1 px-4">
         <Label content="Un label custom"></Label>
         <TextBox placeHolder="base"></TextBox>
-    </>
+    </div>
 }

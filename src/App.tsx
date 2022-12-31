@@ -1,15 +1,12 @@
-import React from "react";
 import "./index.css";
-import DashboardPage from './components/DashboardPage';
-import { deleteReport } from './services/api';
+import Header from "./components/templates/Header";
+import Section from "./components/templates/Section";
 
 function App() {
-  return <>
-    <DashboardPage></DashboardPage>
-  </>
+  return <div className="flex flex-col relative w-[100vw] h-[100vh]">
+      <Header></Header>
+      <Section></Section>
+  </div>
 }
-
-// Probando la peticion desde aca, ese reporte aun existe
-//deleteReport("63ae69148706c9541977030c")
 
 export default App;
