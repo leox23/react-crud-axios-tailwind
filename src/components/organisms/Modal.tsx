@@ -5,10 +5,6 @@ import { Report } from "../../model/Report";
 import { useDispatch } from "react-redux";
 import { addReport } from "../../features/reports/reportSlice";
 
-type Props = {
-  visible: boolean;
-};
-
 export default function Modal() {
   const [report, setReport] = useState<Report>({
     title: "",
