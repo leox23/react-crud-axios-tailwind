@@ -1,19 +1,37 @@
 import TitleXL from "../atoms/TitleXL";
-import Button from "../atoms/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Report } from "../../model/Report";
-import { useDispatch } from "react-redux";
-import { addReport } from "../../features/reports/reportSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addReport, editReport } from "../../features/reports/reportSlice";
+import { v4 as uuid } from "uuid";
 
-export default function Modal() {
-  const [report, setReport] = useState<Report>({
+type Props = {
+  toggle: () => void;
+  reportId?: string;
+  isEditing?: boolean;
+};
+
+export default function Modal({
+  toggle,
+  reportId,
+  isEditing = reportId !== undefined ? true : false,
+}: Props) {
+  const [report, setReport] = useState<Report | any>({
+    id: reportId ? reportId : uuid(),
     title: "",
     description: "",
-    price: 0,
+    price: "",
     content: "",
   });
+  const reports: Report[] = useSelector((state: any) => state.reports);
 
-  const dispatch = useDispatch()
+  useEffect(() => {
+    if (reportId) {
+      setReport(reports.find((report) => report.id === reportId));
+    }
+  }, [setReport, reportId, reports]);
+
+  const dispatch = useDispatch();
 
   const handleChange = (e: { target: { name: string; value: string } }) => {
     setReport({
@@ -24,11 +42,16 @@ export default function Modal() {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    dispatch(addReport(report))
+    if (isEditing) {
+      dispatch(editReport(report));
+    } else {
+      dispatch(addReport(report));
+    }
+    toggle();
   };
 
   return (
-    <div className="z-20 flex flex-col rounded border-2 border-gray-700 bg-white w-[450px] h-[550px] left-[calc(50%-225px)] top-[calc(50%-275px)] py-2">
+    <div className="flex flex-col rounded border-2 border-gray-700 bg-white w-[450px] h-[550px] left-[calc(50%-225px)] top-[calc(50%-275px)] py-2">
       <form onSubmit={handleSubmit}>
         <TitleXL title="Create Card"></TitleXL>
 
@@ -40,6 +63,7 @@ export default function Modal() {
             placeholder="Title of report"
             name="title"
             onChange={handleChange}
+            value={report.title || ""}
           />
         </div>
 
@@ -51,6 +75,7 @@ export default function Modal() {
             placeholder="Description of report"
             name="description"
             onChange={handleChange}
+            value={report.description || ""}
           />
         </div>
 
@@ -59,9 +84,11 @@ export default function Modal() {
           <input
             className="w-[100%] rounded border border-gray-800 py-1.5 px-2"
             type="text"
+            id="priceNode"
             placeholder="Price of report"
             name="price"
             onChange={handleChange}
+            value={report.price.toString()}
           />
         </div>
 
@@ -71,18 +98,15 @@ export default function Modal() {
             name="content"
             onChange={handleChange}
             className="rounded border-2 border-gray-800 w-[100%] p-2 "
-            id=""
             cols={30}
             rows={5}
+            value={report.content || ""}
           ></textarea>
         </div>
 
         <div className="flex justify-evenly items-center">
-          <button>Save</button>
-          <button>Cancel</button>
-
-          <Button label="Cancel"></Button>
-          <Button label="Save"></Button>
+          <button onClick={(e: any) => handleSubmit(e)}>Save</button>
+          <button onClick={toggle}>Cancel</button>
         </div>
       </form>
     </div>
